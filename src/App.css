@@ -1,0 +1,608 @@
+/* ── GLOBALS ──────────────────────────────────────── */
+.invite {
+  overflow-x: hidden;
+  font-family: 'Rubik', sans-serif;
+}
+
+h1, h2 {
+  font-family: 'Rubik Scribble', cursive;
+}
+
+/* ── HERO ─────────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 24px 0;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.04);
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(15, 30, 10, 0.62) 0%,
+    rgba(20, 40, 12, 0.55) 60%,
+    rgba(10, 20, 6, 0.75) 100%
+  );
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  padding-bottom: 80px;
+}
+
+.badge {
+  display: inline-block;
+  background: rgba(196, 149, 42, 0.2);
+  color: #F4D56E;
+  border: 1px solid rgba(196, 149, 42, 0.45);
+  padding: 8px 22px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 28px;
+  letter-spacing: 0.04em;
+}
+
+.hero-title {
+  font-size: clamp(3.2rem, 8vw, 5.5rem);
+  color: white;
+  line-height: 1.15;
+  margin-bottom: 24px;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+}
+
+.hero-body {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 2;
+  margin-bottom: 48px;
+}
+
+.hero-aside {
+  display: block;
+  margin-top: 10px;
+  font-size: 0.92em;
+  color: rgba(255, 255, 255, 0.55);
+  font-style: italic;
+}
+
+.hero-scroll {
+  color: rgba(255, 255, 255, 0.38);
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  animation: softBounce 2.4s ease-in-out infinite;
+}
+
+@keyframes softBounce {
+  0%, 100% { transform: translateY(0); opacity: 0.38; }
+  50%       { transform: translateY(10px); opacity: 0.65; }
+}
+
+.hero-wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  line-height: 0;
+  z-index: 1;
+}
+
+.hero-wave svg {
+  width: 100%;
+  display: block;
+}
+
+/* ── SHARED SECTION ───────────────────────────────── */
+.section {
+  padding: 76px 0;
+  background: #FAFAF7;
+}
+
+.section-alt {
+  background: #ffffff;
+}
+
+.container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 44px;
+}
+
+.section-icon {
+  font-size: 2.4rem;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.section-header h2 {
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  color: #2a2a2a;
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+
+.section-sub {
+  color: #6B5B4E;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+/* ── MUSIC PLACEHOLDER ────────────────────────────── */
+.section-music {
+  background: #F5F2EE;
+}
+
+.music-placeholder {
+  background: white;
+  border: 2px dashed #D4C4B0;
+  border-radius: 20px;
+  padding: 40px 32px;
+  text-align: center;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.music-icon {
+  color: #9B7B54;
+  margin-bottom: 14px;
+}
+
+.music-title {
+  font-family: 'Rubik Scribble', cursive;
+  font-size: 1.4rem;
+  color: #3a3a3a;
+  margin-bottom: 8px;
+}
+
+.music-note {
+  color: #8B7B6B;
+  font-size: 0.95rem;
+  font-style: italic;
+}
+
+/* ── DESTINATION ──────────────────────────────────── */
+.dest-info {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.dest-name {
+  font-family: 'Rubik Scribble', cursive;
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: #2a2a2a;
+  margin-bottom: 6px;
+}
+
+.dest-cabin {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #8B6914;
+  margin-bottom: 12px;
+}
+
+.dest-vibe {
+  color: #6B5B4E;
+  font-size: 0.97rem;
+  line-height: 1.9;
+}
+
+.dest-vibe-aside {
+  font-size: 0.88em;
+  color: #9a8878;
+  font-style: italic;
+}
+
+/* ── GALLERY ──────────────────────────────────────── */
+.place-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.gallery-img {
+  height: 240px;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.4s ease;
+}
+
+.gallery-img:hover {
+  transform: scale(1.03);
+}
+
+/* ── BREAKFAST CARD ───────────────────────────────── */
+.breakfast-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid #E8DDD0;
+  box-shadow: 0 4px 28px rgba(0,0,0,0.07);
+  margin-bottom: 24px;
+}
+
+.breakfast-img {
+  background-size: cover;
+  background-position: center;
+  min-height: 260px;
+}
+
+.breakfast-text {
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.breakfast-text h3 {
+  font-family: 'Rubik Scribble', cursive;
+  font-size: 1.6rem;
+  color: #2a2a2a;
+  margin-bottom: 4px;
+}
+
+.breakfast-text p {
+  color: #6B5B4E;
+  font-size: 0.97rem;
+  line-height: 1.85;
+}
+
+.place-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #4A7C59;
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin-top: 6px;
+  border-bottom: 1px solid #4A7C59;
+  padding-bottom: 1px;
+  width: fit-content;
+  transition: opacity 0.2s;
+}
+
+.place-link:hover { opacity: 0.7; }
+
+/* ── DRIVE NORTH ──────────────────────────────────── */
+.drive-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 22px;
+  background: #FAFAF7;
+  border: 1px solid #E8DDD0;
+  border-radius: 18px;
+  padding: 28px 28px;
+}
+
+.drive-emoji {
+  font-size: 2.2rem;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.drive-text h3 {
+  font-family: 'Rubik Scribble', cursive;
+  font-size: 1.5rem;
+  color: #2a2a2a;
+  margin-bottom: 8px;
+}
+
+.drive-text p {
+  color: #6B5B4E;
+  font-size: 0.97rem;
+  line-height: 1.85;
+  margin-bottom: 12px;
+}
+
+.playlist-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: linear-gradient(135deg, #FF0000, #CC0000);
+  color: white;
+  padding: 9px 20px;
+  border-radius: 50px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  transition: opacity 0.2s;
+}
+
+.playlist-link:hover { opacity: 0.85; }
+
+.playlist-soon {
+  font-weight: 400;
+  opacity: 0.75;
+  margin-right: 2px;
+}
+
+/* ── BISLI ────────────────────────────────────────── */
+.section-bisli {
+  background: linear-gradient(135deg, #FFF8EC 0%, #FFF2DC 100%);
+}
+
+.section-bisli .section-header h2 {
+  color: #7B4A1E;
+}
+
+.bisli-sub {
+  color: #9B6B3E !important;
+  font-weight: 500;
+}
+
+.bisli-cartoon {
+  background: white;
+  border: 2px dashed #D4A870;
+  border-radius: 20px;
+  padding: 44px 32px;
+  text-align: center;
+  max-width: 480px;
+  margin: 0 auto 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.cartoon-paw {
+  color: #C4852A;
+}
+
+.cartoon-label {
+  color: #7B5A3E;
+  font-size: 0.97rem;
+  line-height: 1.85;
+}
+
+.cartoon-sub {
+  font-size: 0.88em;
+  color: #A07850;
+  font-style: italic;
+}
+
+.bisli-note {
+  text-align: center;
+  color: #7B5A3E;
+  font-size: 0.97rem;
+  line-height: 1.9;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* ── SURPRISES ────────────────────────────────────── */
+.surprises-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.surprise-card {
+  background: white;
+  border: 1px solid #E8DDD0;
+  border-radius: 18px;
+  padding: 32px 24px;
+  text-align: center;
+  box-shadow: 0 2px 18px rgba(0,0,0,0.04);
+}
+
+.surprise-emoji {
+  font-size: 2.6rem;
+  display: block;
+  margin-bottom: 14px;
+}
+
+.surprise-card p {
+  color: #4A3A2A;
+  font-size: 0.97rem;
+  line-height: 1.85;
+}
+
+/* ── RING CEREMONY ────────────────────────────────── */
+.section-rings {
+  background: linear-gradient(155deg, #FDF5F8 0%, #F8EFF4 100%);
+}
+
+.section-rings .section-header h2 {
+  color: #7B3D55;
+}
+
+.rings-sub {
+  font-size: 1.05rem !important;
+  color: #9B5D75 !important;
+  font-style: italic;
+  margin-top: 6px;
+}
+
+.rings-card {
+  background: white;
+  border: 1px solid #EDD5DF;
+  border-radius: 22px;
+  padding: 40px;
+  max-width: 480px;
+  margin: 0 auto;
+  box-shadow: 0 6px 36px rgba(123,61,85,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.rings-intro {
+  color: #4A2A35;
+  font-size: 1rem;
+  line-height: 1.95;
+  text-align: center;
+}
+
+.rings-mission {
+  background: #FFF5F8;
+  border: 1px solid #EDD5DF;
+  border-radius: 14px;
+  padding: 22px 24px;
+  text-align: center;
+}
+
+.mission-badge {
+  display: inline-block;
+  background: #7B3D55;
+  color: white;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 5px 14px;
+  border-radius: 50px;
+  margin-bottom: 12px;
+  letter-spacing: 0.03em;
+}
+
+.rings-mission p {
+  color: #5A2A40;
+  font-size: 0.97rem;
+  line-height: 1.9;
+}
+
+.mission-hint {
+  font-size: 0.88em;
+  color: #9B6B80;
+  font-style: italic;
+}
+
+.rings-end {
+  text-align: center;
+  color: #7B3D55;
+  font-size: 0.97rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.inline-heart {
+  color: #C0637E;
+  display: inline;
+  vertical-align: middle;
+}
+
+/* ── FLOW & MAP ───────────────────────────────────── */
+.flow-text {
+  text-align: center;
+  color: #4A3A2A;
+  font-size: 1.05rem;
+  line-height: 2;
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+.map-btn-wrap {
+  text-align: center;
+  margin-top: 36px;
+}
+
+.map-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #4A7C59, #2a5018);
+  color: white;
+  padding: 16px 38px;
+  border-radius: 50px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  box-shadow: 0 6px 24px rgba(42,80,24,0.35);
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.map-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 32px rgba(42,80,24,0.45);
+}
+
+/* ── FOOTER ───────────────────────────────────────── */
+.footer {
+  background: linear-gradient(155deg, #1e3d14 0%, #2d5a1e 100%);
+  padding: 70px 24px;
+  text-align: center;
+  color: white;
+}
+
+.footer-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.footer-title {
+  font-family: 'Rubik Scribble', cursive;
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: #F4D56E;
+}
+
+.footer-note {
+  font-size: 1.05rem;
+  line-height: 1.9;
+  color: rgba(255,255,255,0.78);
+}
+
+.footer-sign {
+  font-size: 1rem;
+  line-height: 1.9;
+  color: rgba(255,255,255,0.6);
+}
+
+.footer-sign strong {
+  color: rgba(255,255,255,0.88);
+}
+
+/* ── RESPONSIVE ───────────────────────────────────── */
+@media (max-width: 680px) {
+  .section { padding: 56px 0; }
+
+  .place-gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .gallery-img {
+    height: 200px;
+  }
+
+  .breakfast-card {
+    grid-template-columns: 1fr;
+  }
+
+  .breakfast-img {
+    min-height: 200px;
+  }
+
+  .drive-card {
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .rings-card {
+    padding: 28px 20px;
+  }
+}
