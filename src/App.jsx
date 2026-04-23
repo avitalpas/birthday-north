@@ -1,5 +1,7 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { MapPin, Music, PawPrint, Heart, ExternalLink } from 'lucide-react'
+import { MapPin, Music, Heart } from 'lucide-react'
+import c from './content'
 import './App.css'
 
 const reveal = (delay = 0) => ({
@@ -10,6 +12,8 @@ const reveal = (delay = 0) => ({
 })
 
 export default function App() {
+  const [musicStarted, setMusicStarted] = useState(false)
+
   return (
     <div className="invite">
 
@@ -23,22 +27,22 @@ export default function App() {
 
         <div className="hero-content">
           <motion.div {...reveal(0.1)}>
-            <span className="badge">🎂 יום הולדת שמח, אוראל</span>
+            <span className="badge">{c.hero.badge}</span>
           </motion.div>
 
           <motion.h1 {...reveal(0.25)} className="hero-title">
-            הגיע הזמן<br />לנשום.
+            {c.hero.title1}<br />{c.hero.title2}
           </motion.h1>
 
           <motion.p {...reveal(0.4)} className="hero-body">
-            אחרי מילואים. אחרי מלחמה.<br />
-            אחרי שגרה שהיא לא ממש שגרה.<br />
-            סוף סוף בורחים מהעולם —<br />
-            <span className="hero-aside">(לא, ממש בורחים. עם תיק. ועם כלבה.)</span>
+            {c.hero.line1}<br />
+            {c.hero.line2}<br />
+            {c.hero.line3}<br />
+            <span className="hero-aside">{c.hero.aside}</span>
           </motion.p>
 
           <motion.div {...reveal(0.55)} className="hero-scroll">
-            ↓ &nbsp; גלול לגלות
+            {c.hero.scroll}
           </motion.div>
         </div>
 
@@ -54,50 +58,33 @@ export default function App() {
         <div className="container">
           <motion.div {...reveal()} className="section-header">
             <span className="section-icon">🎵</span>
-            <h2>השיר של הטיול</h2>
-            <p className="section-sub">בחרתי לנו משהו להתכוונן אליו לפני שיוצאים</p>
+            <h2>{c.music.sectionTitle}</h2>
+            <p className="section-sub">{c.music.sectionSub}</p>
           </motion.div>
 
-          <motion.div {...reveal(0.15)} className="music-placeholder">
-            <Music size={38} className="music-icon" />
-            <p className="music-title">הסאונדטרק הרשמי של הבריחה שלנו</p>
-            <p className="music-note">עוד בוחרים שיר — אבל תדע שהוא יגרום לך לחייך.</p>
+          <motion.div {...reveal(0.15)} className="music-player-wrap">
+            {c.music.songId ? (
+              musicStarted ? (
+                <iframe
+                  className="music-embed"
+                  src={`https://www.youtube.com/embed/${c.music.songId}?autoplay=1`}
+                  allow="autoplay; encrypted-media"
+                  allowFullScreen
+                />
+              ) : (
+                <button className="music-play-btn" onClick={() => setMusicStarted(true)}>
+                  <Music size={22} />
+                  {c.music.playBtnText}
+                </button>
+              )
+            ) : (
+              <div className="music-placeholder">
+                <Music size={38} className="music-icon" />
+                <p className="music-title">{c.music.cardTitle || 'הסאונדטרק הרשמי של הנופש'}</p>
+                <p className="music-note">בקרוב — השיר שייגרום לך לחייך 🎵</p>
+              </div>
+            )}
           </motion.div>
-        </div>
-      </section>
-
-      {/* ── DESTINATION ── */}
-      <section className="section">
-        <div className="container">
-          <motion.div {...reveal()} className="section-header">
-            <span className="section-icon">🏡</span>
-            <h2>לאן נוסעים?</h2>
-            <p className="section-sub">לא ספרתי לך. עכשיו אני מספרת.</p>
-          </motion.div>
-
-          <motion.div {...reveal(0.1)} className="dest-info">
-            <h3 className="dest-name">בית לחם הגלילית</h3>
-            <p className="dest-cabin">בקתות עץ Lila</p>
-            <p className="dest-vibe">
-              שקט · ירוק · עץ · ריח של ״ברחנו רגע מהעולם״<br />
-              <span className="dest-vibe-aside">(וגם Wi-Fi, כי אנחנו לא פראיירים)</span>
-            </p>
-          </motion.div>
-
-          <div className="place-gallery">
-            {[
-              '/images/place/place 1.jpg',
-              '/images/place/place 2.jpg',
-              '/images/place/place 3.jpg',
-            ].map((src, i) => (
-              <motion.div
-                key={i}
-                {...reveal(i * 0.14)}
-                className="gallery-img"
-                style={{ backgroundImage: `url('${src}')` }}
-              />
-            ))}
-          </div>
         </div>
       </section>
 
@@ -106,7 +93,7 @@ export default function App() {
         <div className="container">
           <motion.div {...reveal()} className="section-header">
             <span className="section-icon">🌊</span>
-            <h2>ככה מתחילים</h2>
+            <h2>{c.start.sectionTitle}</h2>
           </motion.div>
 
           <motion.div {...reveal(0.1)} className="breakfast-card">
@@ -115,41 +102,58 @@ export default function App() {
               style={{ backgroundImage: `url('/images/port cafe.jpg')` }}
             />
             <div className="breakfast-text">
-              <h3>ארוחת בוקר מול הים</h3>
+              <h3>{c.start.breakfastTitle}</h3>
               <p>
-                פורט קפה, נמל קיסריה.<br />
-                קפה. גלים. ריבה. עוד קפה.<br />
-                הכי טוב שיש לפני שיוצאים לדרך.
+                {c.start.breakfastLine1}<br />
+                {c.start.breakfastLine2}<br />
+                {c.start.breakfastLine3}
               </p>
               <a
-                href="https://maps.app.goo.gl/d2BqpBFkfSjpACHz5"
+                href={c.start.breakfastLinkUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="place-link"
               >
-                <MapPin size={14} /> פורט קפה בנמל קיסריה
+                <MapPin size={14} /> {c.start.breakfastLinkText}
               </a>
             </div>
           </motion.div>
 
-          <motion.div {...reveal(0.2)} className="drive-card">
-            <span className="drive-emoji">🎶</span>
-            <div className="drive-text">
-              <h3>ואז — נוסעים צפונה</h3>
+          <motion.div {...reveal(0.2)} className="breakfast-card">
+            <div className="breakfast-text">
+              <h3>{c.start.driveTitle}</h3>
               <p>
-                עם מוזיקה טובה, חיוכים, ונשנושים שאוראל יגיד ״אל תגמרי את כולם״<br />
-                ואני אגמור אותם בכל זאת.
+                {c.start.driveLine1}<br />
+                {c.start.driveLine2}<br />
+                {c.start.driveLine3}
               </p>
               <a
-                href="YOUR_YOUTUBE_MUSIC_PLAYLIST_LINK_HERE"
+                href={c.start.playlistUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="playlist-link"
               >
-                <Music size={14} /> הפלייליסט שלנו לנסיעה 🎧
-                <span className="playlist-soon">(בקרוב)</span>
+                <Music size={14} /> {c.start.playlistText}
               </a>
             </div>
+            <div
+              className="breakfast-img"
+              style={{ backgroundImage: `url('/images/characters/car.jpg')` }}
+            />
+          </motion.div>
+
+          <motion.div {...reveal(0.28)} className="dest-info" style={{ marginTop: '36px' }}>
+            <h3 className="dest-name">{c.start.cabinName}</h3>
+            <p className="dest-cabin">{c.start.cabinSub}</p>
+            <p className="dest-vibe">
+              {c.start.cabinVibe}<br />
+              <span className="dest-vibe-aside">{c.start.cabinVibeAside}</span>
+            </p>
+          </motion.div>
+
+          <motion.div {...reveal(0.35)} className="cabin-mini-gallery">
+            <div className="cabin-mini-img" style={{ backgroundImage: `url('/images/place/place 1.jpg')` }} />
+            <div className="cabin-mini-img" style={{ backgroundImage: `url('/images/place/place 2.jpg')` }} />
           </motion.div>
         </div>
       </section>
@@ -159,23 +163,18 @@ export default function App() {
         <div className="container">
           <motion.div {...reveal()} className="section-header">
             <span className="section-icon">🐾</span>
-            <h2>ביסלי באה איתנו!!!</h2>
-            <p className="section-sub bisli-sub">
-              כן. רשמית. כחברת צוות מלאה ושווה זכויות.
-            </p>
+            <h2>{c.bisli.sectionTitle}</h2>
+            <p className="section-sub bisli-sub">{c.bisli.sectionSub}</p>
           </motion.div>
 
-          <motion.div {...reveal(0.15)} className="bisli-cartoon">
-            <PawPrint size={36} className="cartoon-paw" />
-            <p className="cartoon-label">
-              [קריקטורה של ביסלי באוטו, מאושרת, עם ראש בחלון]<br />
-              <span className="cartoon-sub">היא לא יודעת לאן היא נוסעת אבל היא בעד</span>
-            </p>
+          <motion.div {...reveal(0.15)} className="character-pair">
+            <img src="/images/characters/forest.jpg" alt="טיול ביער עם ביסלי" className="character-img" />
+            <img src="/images/characters/coffee.jpg" alt="קפה עם ביסלי" className="character-img" />
           </motion.div>
 
           <motion.p {...reveal(0.25)} className="bisli-note">
-            טיולים קצרים, עצירות לריח עצים, ופנים של כלבה שלא מבינה לאן היא נוסעת<br />
-            אבל מאוד נהנית מהתשומת לב.
+            {c.bisli.noteLine1}<br />
+            {c.bisli.noteLine2}
           </motion.p>
         </div>
       </section>
@@ -185,15 +184,12 @@ export default function App() {
         <div className="container">
           <motion.div {...reveal()} className="section-header">
             <span className="section-icon">✨</span>
-            <h2>הפתעות (עדינות)</h2>
-            <p className="section-sub">לא ספוילרים. רק טיזרים.</p>
+            <h2>{c.surprises.sectionTitle}</h2>
+            <p className="section-sub">{c.surprises.sectionSub}</p>
           </motion.div>
 
           <div className="surprises-grid">
-            {[
-              { emoji: '🎀', text: 'משהו קטן ומרגש שמחכה לנו במקום הלינה' },
-              { emoji: '💑', text: 'רגע מיוחד שמוקדש רק לשנינו — רומנטיקה בלי לחץ ובלי לוח זמנים' },
-            ].map((s, i) => (
+            {c.surprises.items.map((s, i) => (
               <motion.div key={i} {...reveal(i * 0.15)} className="surprise-card">
                 <span className="surprise-emoji">{s.emoji}</span>
                 <p>{s.text}</p>
@@ -208,29 +204,27 @@ export default function App() {
         <div className="container">
           <motion.div {...reveal()} className="section-header">
             <span className="section-icon">💍</span>
-            <h2>טקס טבעות</h2>
-            <p className="section-sub rings-sub">
-              ״דברים שרציתי לומר לך מתחת לחופה ולא הספקתי״
-            </p>
+            <h2>{c.rings.sectionTitle}</h2>
+            <p className="section-sub rings-sub">{c.rings.sectionSub}</p>
           </motion.div>
 
           <motion.div {...reveal(0.15)} className="rings-card">
             <p className="rings-intro">
-              הרעיון פשוט: כל אחד מגיע מוכן עם כמה משפטים מהלב.<br />
-              אין קהל. אין חזרות. אין מיקרופון.<br />
-              רק אנחנו, אוויר של גליל, וטבעות.
+              {c.rings.introLine1}<br />
+              {c.rings.introLine2}<br />
+              {c.rings.introLine3}
             </p>
             <div className="rings-mission">
-              <span className="mission-badge">🎯 המשימה שלך</span>
+              <span className="mission-badge">{c.rings.missionBadge}</span>
               <p>
-                לחשוב מראש על משהו שרצית להגיד לי ולא הספקת.<br />
-                ולהגיע מוכן. <strong>כן, גם אתה.</strong><br />
-                <span className="mission-hint">(A4, הטלפון, מפיות — אין שפוט.)</span>
+                {c.rings.missionLine1}<br />
+                {c.rings.missionLine2} <strong>{c.rings.missionBold}</strong><br />
+                <span className="mission-hint">{c.rings.missionHint}</span>
               </p>
             </div>
             <p className="rings-end">
               <Heart size={15} className="inline-heart" />
-              ואז ענידה. בלי דרמה. רק אמת ואהבה.
+              {c.rings.end}
             </p>
           </motion.div>
         </div>
@@ -241,28 +235,32 @@ export default function App() {
         <div className="container">
           <motion.div {...reveal()} className="section-header">
             <span className="section-icon">🍽️</span>
-            <h2>מה עושים בשאר הזמן אתה שואל?</h2>
+            <h2>{c.flow.sectionTitle}</h2>
           </motion.div>
 
           <motion.p {...reveal(0.1)} className="flow-text">
-            כמו חוסר ההחלטיות שלי בנוגע למה אני רוצה לאכול ברגע נתון —<br />
-            לא הצלחתי לבחור מראש.<br />
+            {c.flow.line1}<br />
+            {c.flow.line2}<br />
             <br />
-            גם טראמפ לא.<br />
+            {c.flow.line3}<br />
             <br />
-            לכן הנה מפה עם דברים מגניבים לעשות וטעימים לאכול.<br />
-            נחליט ברגע האמת!!
+            {c.flow.line4}<br />
+            {c.flow.line5}
           </motion.p>
+
+          <motion.div {...reveal(0.15)} className="character-illustration">
+            <img src="/images/characters/restaurant.jpg" alt="אוכלים טוב" className="character-img" />
+          </motion.div>
 
           <motion.div {...reveal(0.22)} className="map-btn-wrap">
             <a
-              href="https://maps.app.goo.gl/m5VKAgKtYEnDyJueA"
+              href={c.flow.mapUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="map-btn"
             >
               <MapPin size={19} />
-              מפת אוכל ודברים כיפיים באזור
+              {c.flow.mapText}
             </a>
           </motion.div>
         </div>
@@ -271,14 +269,14 @@ export default function App() {
       {/* ── FOOTER ── */}
       <footer className="footer">
         <motion.div {...reveal()} className="footer-inner">
-          <p className="footer-title">מזל טוב אהוב שלייי 🎂</p>
+          <p className="footer-title">{c.footer.title}</p>
           <p className="footer-note">
-            מזכירה לצעוד לאט —<br />
-            כי אתה מטייל כרגע עם היפופוטם.
+            {c.footer.noteLine1}<br />
+            {c.footer.noteLine2}
           </p>
           <p className="footer-sign">
-            מודים מקרב לב על ההבנה —<br />
-            <strong>אני, סינוצ'יק וסופליק</strong> 🐾💛
+            {c.footer.signLine1}<br />
+            <strong>{c.footer.signBold}</strong> {c.footer.signEmoji}
           </p>
         </motion.div>
       </footer>
