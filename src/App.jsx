@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { MapPin, Music, Heart } from 'lucide-react'
 import c from './content'
@@ -13,9 +13,77 @@ const reveal = (delay = 0) => ({
 
 export default function App() {
   const [musicStarted, setMusicStarted] = useState(false)
+  const [countdown, setCountdown] = useState(null)
+  const [showBalagan, setShowBalagan] = useState(false)
+  const [contentUnlocked, setContentUnlocked] = useState(false)
+
+  useEffect(() => {
+    if (window.instgrm) window.instgrm.Embeds.process()
+  }, [])
+
+  function handlePlay() {
+    setMusicStarted(true)
+    setCountdown(3)
+    let count = 3
+    const timer = setInterval(() => {
+      count -= 1
+      if (count === 0) {
+        clearInterval(timer)
+        setCountdown(null)
+        setShowBalagan(true)
+        setTimeout(() => {
+          setShowBalagan(false)
+          setContentUnlocked(true)
+        }, 1500)
+      } else {
+        setCountdown(count)
+      }
+    }, 1000)
+  }
 
   return (
     <div className="invite">
+
+      {/* ── COUNTDOWN / BALAGAN POPUP ── */}
+      {(countdown !== null || showBalagan) && (
+        <motion.div
+          className="surprise-popup-overlay"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          <motion.div
+            className="surprise-popup"
+            initial={{ scale: 0.5, rotate: -8 }}
+            animate={{ scale: 1, rotate: 0 }}
+            transition={{ type: 'spring', stiffness: 320, damping: 22 }}
+          >
+            <span className="surprise-popup-burst">🎉</span>
+            {countdown !== null ? (
+              <motion.span
+                key={countdown}
+                className="surprise-popup-number"
+                initial={{ scale: 1.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.35 }}
+              >
+                {countdown}
+              </motion.span>
+            ) : (
+              <motion.span
+                className="surprise-popup-balagan"
+                initial={{ scale: 0.6, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ type: 'spring', stiffness: 260, damping: 18 }}
+              >
+                יאללה בלאגןןן
+              </motion.span>
+            )}
+            <span className="surprise-popup-burst">🎉</span>
+          </motion.div>
+        </motion.div>
+      )}
+
 
       {/* ── HERO ── */}
       <section className="hero">
@@ -53,6 +121,24 @@ export default function App() {
         </div>
       </section>
 
+      {/* ── REEL ── */}
+      <section className="section section-reel">
+        <div className="container">
+          <motion.div {...reveal()} className="section-header">
+            <span className="section-icon">📱</span>
+            <h2>רק שתדע שכל יום לפני הנופש זו אני !!!</h2>
+          </motion.div>
+          <motion.div {...reveal(0.15)} className="reel-wrap">
+            <blockquote
+              className="instagram-media"
+              data-instgrm-captioned
+              data-instgrm-permalink="https://www.instagram.com/reel/DWUYA5ouAdk/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ=="
+              data-instgrm-version="14"
+            />
+          </motion.div>
+        </div>
+      </section>
+
       {/* ── MUSIC ── */}
       <section className="section section-music">
         <div className="container">
@@ -72,7 +158,7 @@ export default function App() {
                   allowFullScreen
                 />
               ) : (
-                <button className="music-play-btn" onClick={() => setMusicStarted(true)}>
+                <button className="music-play-btn" onClick={handlePlay}>
                   <Music size={22} />
                   {c.music.playBtnText}
                 </button>
@@ -84,11 +170,16 @@ export default function App() {
                 <p className="music-note">בקרוב — השיר שייגרום לך לחייך 🎵</p>
               </div>
             )}
+
+            {!contentUnlocked && !countdown && !showBalagan && (
+              <p className="lock-message">☝️ שאר הסודות יופיעו רק אם השיר של הטיול פועל</p>
+            )}
           </motion.div>
         </div>
       </section>
 
       {/* ── HOW WE START ── */}
+      {contentUnlocked && <>
       <section className="section section-alt">
         <div className="container">
           <motion.div {...reveal()} className="section-header">
@@ -99,7 +190,7 @@ export default function App() {
           <motion.div {...reveal(0.1)} className="breakfast-card">
             <div
               className="breakfast-img"
-              style={{ backgroundImage: `url('/images/port cafe.jpg')` }}
+              style={{ backgroundImage: `url('/images/aroma caffe.jpg')` }}
             />
             <div className="breakfast-text">
               <h3>{c.start.breakfastTitle}</h3>
@@ -142,6 +233,21 @@ export default function App() {
             />
           </motion.div>
 
+          <motion.div {...reveal(0.25)} className="breakfast-card">
+            <div
+              className="breakfast-img"
+              style={{ backgroundImage: `url('/images/blue sport car.jpg')` }}
+            />
+            <div className="breakfast-text">
+              <h3>{c.start.liftTitle}</h3>
+              <p>
+                {c.start.liftLine1}<br />
+                {c.start.liftLine2}<br />
+                {c.start.liftLine3}
+              </p>
+            </div>
+          </motion.div>
+
           <motion.div {...reveal(0.28)} className="dest-info" style={{ marginTop: '36px' }}>
             <h3 className="dest-name">{c.start.cabinName}</h3>
             <p className="dest-cabin">{c.start.cabinSub}</p>
@@ -149,6 +255,14 @@ export default function App() {
               {c.start.cabinVibe}<br />
               <span className="dest-vibe-aside">{c.start.cabinVibeAside}</span>
             </p>
+            <a
+              href={c.start.cabinLinkUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="place-link"
+            >
+              <MapPin size={14} /> {c.start.cabinLinkText}
+            </a>
           </motion.div>
 
           <motion.div {...reveal(0.35)} className="cabin-mini-gallery">
@@ -188,10 +302,13 @@ export default function App() {
             <p className="section-sub">{c.surprises.sectionSub}</p>
           </motion.div>
 
+          <motion.div {...reveal(0.1)} className="character-illustration">
+            <img src="/images/surprise.png" alt="הפתעה" className="character-img" />
+          </motion.div>
+
           <div className="surprises-grid">
             {c.surprises.items.map((s, i) => (
               <motion.div key={i} {...reveal(i * 0.15)} className="surprise-card">
-                <span className="surprise-emoji">{s.emoji}</span>
                 <p>{s.text}</p>
               </motion.div>
             ))}
@@ -199,36 +316,6 @@ export default function App() {
         </div>
       </section>
 
-      {/* ── RING CEREMONY ── */}
-      <section className="section section-rings">
-        <div className="container">
-          <motion.div {...reveal()} className="section-header">
-            <span className="section-icon">💍</span>
-            <h2>{c.rings.sectionTitle}</h2>
-            <p className="section-sub rings-sub">{c.rings.sectionSub}</p>
-          </motion.div>
-
-          <motion.div {...reveal(0.15)} className="rings-card">
-            <p className="rings-intro">
-              {c.rings.introLine1}<br />
-              {c.rings.introLine2}<br />
-              {c.rings.introLine3}
-            </p>
-            <div className="rings-mission">
-              <span className="mission-badge">{c.rings.missionBadge}</span>
-              <p>
-                {c.rings.missionLine1}<br />
-                {c.rings.missionLine2} <strong>{c.rings.missionBold}</strong><br />
-                <span className="mission-hint">{c.rings.missionHint}</span>
-              </p>
-            </div>
-            <p className="rings-end">
-              <Heart size={15} className="inline-heart" />
-              {c.rings.end}
-            </p>
-          </motion.div>
-        </div>
-      </section>
 
       {/* ── FLOW & MAP ── */}
       <section className="section section-alt">
@@ -266,7 +353,6 @@ export default function App() {
         </div>
       </section>
 
-      {/* ── FOOTER ── */}
       <footer className="footer">
         <motion.div {...reveal()} className="footer-inner">
           <p className="footer-title">{c.footer.title}</p>
@@ -274,12 +360,14 @@ export default function App() {
             {c.footer.noteLine1}<br />
             {c.footer.noteLine2}
           </p>
+          <img src="/images/slow.png" alt="לאט לאט" className="footer-img" />
           <p className="footer-sign">
             {c.footer.signLine1}<br />
             <strong>{c.footer.signBold}</strong> {c.footer.signEmoji}
           </p>
         </motion.div>
       </footer>
+      </>}
 
     </div>
   )

@@ -154,6 +154,63 @@ h1, h2 {
   background: #F5F2EE;
 }
 
+/* ── LOCK MESSAGE ── */
+.lock-message {
+  margin-top: 24px;
+  font-size: clamp(1rem, 2.5vw, 1.15rem);
+  color: #c0392b;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.8;
+}
+
+/* ── SURPRISE POPUP ── */
+.surprise-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.surprise-popup {
+  background: linear-gradient(135deg, #fff9ee 0%, #fff3d6 100%);
+  border: 3px solid #C4952A;
+  border-radius: 32px;
+  padding: 52px 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.35), 0 0 0 8px rgba(196,149,42,0.15);
+  text-align: center;
+  min-width: 280px;
+}
+
+.surprise-popup-burst {
+  font-size: 2.4rem;
+  line-height: 1;
+}
+
+.surprise-popup-number {
+  font-family: 'Gveret Levin', cursive;
+  font-size: clamp(7rem, 22vw, 11rem);
+  color: #3A5C3A;
+  line-height: 1;
+  display: block;
+}
+
+.surprise-popup-balagan {
+  font-family: 'Gveret Levin', cursive;
+  font-size: clamp(2.8rem, 8vw, 4.5rem);
+  color: #3A5C3A;
+  line-height: 1.2;
+  display: block;
+}
+
 .music-player-wrap {
   max-width: 480px;
   margin: 0 auto;
@@ -619,6 +676,15 @@ h1, h2 {
   color: white;
 }
 
+.reel-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.reel-wrap .instagram-media {
+  margin: 0 auto !important;
+}
+
 .footer-inner {
   display: flex;
   flex-direction: column;
@@ -635,6 +701,14 @@ h1, h2 {
   font-size: 1.05rem;
   line-height: 1.9;
   color: rgba(255,255,255,0.78);
+}
+
+.footer-img {
+  width: 420px;
+  max-width: 100%;
+  border-radius: 16px;
+  opacity: 0.9;
+  margin: 4px auto;
 }
 
 .footer-sign {
