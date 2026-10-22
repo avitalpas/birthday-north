@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { MapPin, Music, Heart } from 'lucide-react'
+import { MapPin, Music } from 'lucide-react'
 import c from './content'
 import './App.css'
 
